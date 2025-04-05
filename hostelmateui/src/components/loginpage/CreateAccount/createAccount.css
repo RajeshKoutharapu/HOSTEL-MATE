@@ -1,0 +1,12 @@
+/* createAccount.css */
+
+.createAccountdiv {
+    width: 500px !important; /* Or any width you prefer */
+    margin: 50px auto; /* centers it */
+    padding: 20px;
+    background-color: #f8f9fa;
+    border-radius: 10px;
+    box-shadow: 0 0 10px rgba(0,0,0,0.1);
+  
+  }
+  

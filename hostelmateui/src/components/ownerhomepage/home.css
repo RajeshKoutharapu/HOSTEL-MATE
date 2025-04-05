@@ -1,0 +1,24 @@
+.navbar{
+    background-color: rgb(216, 212, 216);
+}
+.icon {
+    cursor: pointer;
+    transition: transform 0.2s ease-in-out;
+    margin-right: 60px; /* 👈 adjust the value as needed */
+  }
+  
+  .icon {
+    cursor: pointer;
+    transition: transform 0.2s ease-in-out;
+  }
+  
+  .icon:hover {
+    transform: scale(1.1);
+  }
+  
+  .cards:hover{
+    background-color: rgb(221, 231, 242);
+  }
+  .navbar-title {
+    color: white;
+  }
