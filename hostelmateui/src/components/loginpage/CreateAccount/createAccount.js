@@ -1,16 +1,18 @@
 import { Link } from 'react-router-dom';
 import './createAccount.css';
 import { useState } from 'react';
+import axios from 'axios'
 
 function CreateAccount() {
  let [backToLogin,updateBackToLogin]=useState(false)//state used to navigate back to login page after succesfull registration
+ let [emailexisteserror,updateEmailExiste]=useState(false);
   const [newdata, updatedata] = useState({
-    firstname: "",
-    lastname: "",
-    hostelname: "",
+    firstName: "",
+    lastName: "",
+    hostelName: "",
     location: "",
-    Mobilenumber: "",
-    emailid: "",
+    mobileNumber: "",
+    email: "",
     password: "",
     conformpassword: ""
   });
@@ -32,8 +34,30 @@ function CreateAccount() {
       [e.target.name]: e.target.value
     });
   }
+  async function  handleSubmit(){
+
+    const currentDate = new Date().toISOString().split('T')[0]; // Format: YYYY-MM-DD
+   const {conformpassword,...filteredstate}=newdata;
+    const dataWithDate = {
+      ...filteredstate,
+      registrationDate: currentDate
+    };
+    try {
+      console.log(dataWithDate)
+      const response = await axios.post("http://localhost:8080/register",dataWithDate);
+  
+      if (response.status===200) {
+       updateEmailExiste(false)
+        updateBackToLogin(true); // navigate back to login
+      }
+    } catch (error) {
+      updateEmailExiste(true)
+      console.error("Registration error:", error);
+    }
+  }
 
   function validate() {
+    console.log("clicked")
     let newErrors = { ...errors };
     let temp = true;
 
@@ -41,12 +65,12 @@ function CreateAccount() {
     const emailPattern = /^[a-zA-Z0-9._%+-]+@[a-zA-Z0-9.-]+\.[a-zA-Z]{2,}$/;
     const passwordPattern = /^(?=.*[a-z])(?=.*[A-Z])(?=.*\d)(?=.*[@$!%*?&])[A-Za-z\d@$!%*?&]{8,}$/;
 
-    newErrors.firstname = newdata.firstname === "";
-    newErrors.lastname = newdata.lastname === "";
-    newErrors.hostelname = newdata.hostelname === "";
+    newErrors.firstname = newdata.firstName === "";
+    newErrors.lastname = newdata.lastName === "";
+    newErrors.hostelname = newdata.hostelName === "";
     newErrors.location = newdata.location === "";
-    newErrors.Mobilenumber = !mobilePattern.test(newdata.Mobilenumber);
-    newErrors.emailid = !emailPattern.test(newdata.emailid);
+    newErrors.Mobilenumber = !mobilePattern.test(newdata.mobileNumber);
+    newErrors.emailid = !emailPattern.test(newdata.email);
     newErrors.password = !passwordPattern.test(newdata.password);
     newErrors.conformpassword = newdata.password !== newdata.conformpassword;
 
@@ -56,8 +80,7 @@ function CreateAccount() {
     updateerrors(newErrors);
 
     if (temp) {
-      alert("Form submitted successfully!");
-      updateBackToLogin(true)
+     handleSubmit();
     }
   }
 
@@ -68,19 +91,19 @@ function CreateAccount() {
 
         <div>
           <label>First Name:</label>
-          <input name="firstname" className='form-control' type='text' value={newdata.firstname} onChange={handleChange} />
+          <input name="firstName" className='form-control' type='text' value={newdata.firstName} onChange={handleChange} />
           {errors.firstname && <p className='text-danger mt-2'>Invalid first name</p>}
         </div>
 
         <div>
           <label>Last Name:</label>
-          <input name="lastname" className='form-control' type='text' value={newdata.lastname} onChange={handleChange} />
+          <input name="lastName" className='form-control' type='text' value={newdata.lastName} onChange={handleChange} />
           {errors.lastname && <p className='text-danger mt-2'>Invalid last name</p>}
         </div>
 
         <div>
           <label>Hostel Name:</label>
-          <input name="hostelname" className='form-control' type='text' value={newdata.hostelname} onChange={handleChange} />
+          <input name="hostelName" className='form-control' type='text' value={newdata.hostelName} onChange={handleChange} />
           {errors.hostelname && <p className='text-danger mt-2'>Invalid hostel name</p>}
         </div>
 
@@ -92,14 +115,15 @@ function CreateAccount() {
 
         <div>
           <label>Mobile Number:</label>
-          <input name="Mobilenumber" className='form-control' type='text' value={newdata.Mobilenumber} onChange={handleChange} />
+          <input name="mobileNumber" className='form-control' type='text' value={newdata.mobileNumber} onChange={handleChange} />
           {errors.Mobilenumber && <p className='text-danger mt-2'>Invalid mobile number</p>}
         </div>
 
         <div>
           <label>Email ID:</label>
-          <input name="emailid" className='form-control' type='text' value={newdata.emailid} onChange={handleChange} />
+          <input name="email" className='form-control' type='text' value={newdata.email} onChange={handleChange} />
           {errors.emailid && <p className='text-danger mt-2'>Invalid email ID</p>}
+          {emailexisteserror && <p className='text-danger mt-2'> entered email is already exists</p>}
         </div>
 
         <div>
@@ -121,9 +145,31 @@ function CreateAccount() {
         <div className='text-center'>
           <button className='btn btn-primary mt-4' onClick={validate}>Register</button>
         </div>
-        { backToLogin && <div className='text-centet'>
-           <Link to={'/'}> Back  to login</Link>
-        </div> }
+       {backToLogin && (
+  <>
+    <div className='text-center'>
+      <Link to={'/'}>Back to login</Link>
+    </div>
+
+    <svg xmlns="http://www.w3.org/2000/svg" style={{ display: 'none' }}>
+      <symbol id="check-circle-fill" fill="currentColor" viewBox="0 0 16 16">
+        <path d="M16 8A8 8 0 1 1 0 8a8 8 0 0 1 16 0zm-3.97-3.03a.75.75 0 0 0-1.08.022L7.477 9.417 
+        5.384 7.323a.75.75 0 0 0-1.06 1.06L6.97 11.03a.75.75 0 0 0 1.079-.02l3.992-4.99a.75.75 
+        0 0 0-.01-1.05z"/>
+      </symbol>
+    </svg>
+
+    <div className="alert alert-success d-flex align-items-center" role="alert">
+      <svg className="bi flex-shrink-0 me-2" width="24" height="24" role="img" aria-label="Success:">
+        <use href="#check-circle-fill" />
+      </svg>
+      <div>
+        Registered successfully!
+      </div>
+    </div>
+  </>
+)}
+
       </div>
     </>
   );

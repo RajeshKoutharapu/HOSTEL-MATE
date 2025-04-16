@@ -1,22 +1,41 @@
 import './login.css';
 import { useRef } from 'react';
 import {useState} from 'react';
-import CreateAccount from './CreateAccount/createAccount';
 import{Link} from 'react-router-dom'
+import axios from 'axios'
+import { useNavigate } from 'react-router-dom';
+
 function Login() {
 
      let Husernameref=useRef();
      let Hpasswordref=useRef();
+     const navigate = useNavigate();
     let [error,setError]=useState(false);
-     function validate(username,password){
-         if(username==="rajesh" && password==="pass"){
-              alert("secces")
-            setError(false)
+    let verificationstatus;
+    async function validate(username,password){
+       
+            try{
+              verificationstatus= await axios.post('http://localhost:8080/login',{
+                userId:username,
+                password:password
+              })
+              setError(false);
+              const{token,HostelName}=verificationstatus.data;
+              console.log("JWT--->",verificationstatus.data,token,HostelName)
+            
+              localStorage.setItem('token',token)
+
+             navigate("/hostelmatehome",{ state: { HostelName } });
              
-         }else{
-              setError(true)
-         }
-         
+
+            } catch(error){
+              setError(true);
+              console.log("working")
+           
+          }
+          
+        
+          
        
           
      }

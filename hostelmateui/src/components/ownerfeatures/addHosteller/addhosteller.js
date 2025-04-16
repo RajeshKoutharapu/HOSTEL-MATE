@@ -52,7 +52,7 @@ function AddHosteller() {
      newErrors.nativePlace=hostlerData==="";
      newErrors.profestion=hostlerData==="";
      newErrors.AllotedRoom=hostlerData==="";
-     newErrors.Mode=hostlerData.Mode==="";
+     newErrors.Mode=hostlerData.Mode==="Choose";
      newErrors.paymentMonths=hostlerData==="";
      check=!Object.values(newErrors).includes(true);
       updateerrors(newErrors);
@@ -69,52 +69,68 @@ function AddHosteller() {
           <h3>Add Hosteller</h3>
         </div>
         <div className="card-body">
-          <form className="row g-3">
-
+         
+          <div className='row'>
             <div className="col-md-6">
               <label className="form-label">First Name</label>
               <input name="firstname" type="text" className="form-control" placeholder="First Name" value={hostlerData.firstname} onChange={handleChange} />
-              
+              {errors.firstname && <p className='text-danger'>inavlid name</p>}
             </div>
 
             <div className="col-md-6">
               <label className="form-label">Last Name</label>
               <input name="lastname" type="text" className="form-control" placeholder="Last Name" value={hostlerData.lastname} onChange={handleChange} />
+              {errors.lastname && <p className='text-danger'>inavlid name</p>}
+
             </div>
 
             <div className="col-md-6">
               <label className="form-label">Father's Name</label>
               <input name="fathername" type="text" className="form-control" placeholder="Father's Name" value={hostlerData.fathername} onChange={handleChange} />
+              {errors.fathername && <p className='text-danger'>inavlid name</p>}
+
             </div>
 
             <div className="col-md-6">
               <label className="form-label">Mobile Number</label>
               <input name="mobilenumber" type="text" className="form-control" placeholder="Mobile Number" value={hostlerData.mobilenumber} onChange={handleChange} />
+              {errors.mobilenumber && <p className='text-danger'>inavlid number</p>}
+
             </div>
 
             <div className="col-md-6">
               <label className="form-label">Father's Mobile</label>
               <input name="fathermobilenumber" type="text" className="form-control" placeholder="Father's Mobile" value={hostlerData.fathermobilenumber} onChange={handleChange} />
+              {errors.fathermobilenumber && <p className='text-danger'>inavlid mobile number</p>}
+
             </div>
 
             <div className="col-md-6">
               <label className="form-label">Aadhaar Number</label>
               <input name="adharnumber" type="text" className="form-control" placeholder="Aadhaar Number" value={hostlerData.adharnumber} onChange={handleChange} />
+              {errors.adharnumber && <p className='text-danger'>inavlid aadhar umber</p>}
+
             </div>
 
             <div className="col-md-6">
               <label className="form-label">Native Place</label>
               <input name="nativePlace" type="text" className="form-control" placeholder="Native Place" value={hostlerData.nativePlace} onChange={handleChange} />
+              {errors.nativePlace && <p className='text-danger'>invalid Native Place</p>}
+
             </div>
 
             <div className="col-md-6">
               <label className="form-label">Profession</label>
               <input name="profestion" type="text" className="form-control" placeholder="Profession" value={hostlerData.profestion} onChange={handleChange} />
+              {errors.firstname && <p className='text-danger'>inavlid profection</p>}
+
             </div>
 
             <div className="col-md-6">
               <label className="form-label">Allotted Room</label>
               <input name="AllotedRoom" type="text" className="form-control" placeholder="Room Number" value={hostlerData.AllotedRoom} onChange={handleChange} />
+              {errors.firstname && <p className='text-danger'>invalid Alloted Room</p>}
+
             </div>
 
             <div className="col-md-6">
@@ -123,6 +139,8 @@ function AddHosteller() {
                 <option value="">Choose...</option>
                 <option value="hosteller">Hosteller</option>
                 <option value="onlyfood">Only Food</option>
+                {errors.Mode && <p className='text-danger'>inavlid name</p>}
+
               </select>
             </div>
 
@@ -132,10 +150,10 @@ function AddHosteller() {
             </div>
 
             <div className="col-12 text-center">
-              <button type="submit" className="btn btn-success px-5" onClick={validate}>Add Hosteller</button>
+              <button  className="btn btn-success px-5" onClick={validate}>Add Hosteller</button>
             </div>
-
-          </form>
+            </div>
+          
         </div>
       </div>
     </div>

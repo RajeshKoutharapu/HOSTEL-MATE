@@ -5,6 +5,8 @@ import{BrowserRouter,Routes,Route} from 'react-router-dom'
 import CreateAccount from './components/loginpage/CreateAccount/createAccount.js';
 import OwnerHomePage from './components/ownerhomepage/home.js';
 import AddHosteller from './components/ownerfeatures/addHosteller/addhosteller.js';
+import PendingDues from './components/ownerfeatures/pendingdues/pendingdues.js';
+import GetHosteller from './components/ownerfeatures/hostellersInfo/gethostlers.js';
 function App() {
   return (
     <>
@@ -15,7 +17,10 @@ function App() {
     <Route path='/' element={<Login />}/>
     <Route path='/create' element={<CreateAccount />} />
     <Route path='/hostelmatehome' element={<OwnerHomePage/>}></Route>
-    <Route path='add' element={<AddHosteller/>} />
+    <Route path='/add' element={<AddHosteller/>} />
+    <Route path='/pendingdues' element={< PendingDues/>} />
+     <Route path='/gethostller' element={<GetHosteller/>} />
+   
    </Routes>
    </BrowserRouter>
   

@@ -1,14 +1,17 @@
 import './home.css';
-import { Link,Outlet } from 'react-router-dom';
+import { Link,useLocation } from 'react-router-dom';
+
 function OwnerHomePage() {
   const handleProfileClick = () => {
     alert("Profile icon clicked! You can navigate to the profile page here.");
   };
+  const location = useLocation();
+  const username=location.state?.HostelName
 
   return (
     <>
       <nav className="navbar custom-navbar " data-bs-theme="dark">
-        <h1 className="navbar-title ">Hello Rajeeh</h1>
+        <h1 className="navbar-title ">Hello {username}</h1>
 
         <svg
           className="icon"
@@ -44,8 +47,8 @@ function OwnerHomePage() {
            <div className="card text-center h-100 shadow-sm">
              <div className="card-body d-flex flex-column justify-content-between cards">
                <h5 className="card-title">Pending Dues</h5>
-               <button className="btn btn-primary mt-3">Click</button>
-             </div>
+               <Link to="/pendingdues" className="btn btn-primary mt-3">Add</Link>
+               </div>
            </div>
          </div>
 
@@ -62,7 +65,7 @@ function OwnerHomePage() {
            <div className="card text-center h-100 shadow-sm">
              <div className="card-body d-flex flex-column justify-content-between cards">
                <h5 className="card-title">Vacate Hostler</h5>
-               <button className="btn btn-primary mt-3">Vacate</button>
+               <button className="btn btn-primary mt-3" data-bs-toggle="modal" data-bs-target="#exampleModal">Vacate</button>
              </div>
            </div>
          </div>
@@ -80,7 +83,7 @@ function OwnerHomePage() {
            <div className="card text-center h-100 shadow-sm">
              <div className="card-body d-flex flex-column justify-content-between cards">
                <h5 className="card-title">Get Hostler Information</h5>
-               <button className="btn btn-primary mt-3">Get</button>
+               <Link to="/gethostller" className="btn btn-primary mt-3">Add</Link>
              </div>
            </div>
          </div>
@@ -107,62 +110,34 @@ function OwnerHomePage() {
            <div className="card text-center h-100 shadow-sm">
              <div className="card-body d-flex flex-column justify-content-between cards">
                <h5 className="card-title">Get Menu</h5>
-               <button className="btn btn-primary mt-3"
-                                 data-bs-toggle="modal"
-                                  data-bs-target="#menuModal">Get</button>
+               <button className="btn btn-primary mt-3">Get</button>
              </div>
            </div>
          </div>
          </div>
-      
+        
       </div>
        
-        
-
-        {/* Scrollable Modal */}
-<div
-  className="modal fade"
-  id="menuModal"
-  tabIndex="-1"
-  aria-labelledby="menuModalLabel"
-  aria-hidden="true"
->
-  <div className="modal-dialog modal-dialog-scrollable">
-    <div className="modal-content">
-      <div className="modal-header">
-        <h5 className="modal-title" id="menuModalLabel">Menu for the Day</h5>
-        <button
-          type="button"
-          className="btn-close"
-          data-bs-dismiss="modal"
-          aria-label="Close"
-        ></button>
+      {/* <!-- Modal --> model for vacate hosteller */}
+<div class="modal fade" id="exampleModal" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
+  <div class="modal-dialog">
+    <div class="modal-content">
+      <div class="modal-header">
+        <h1 class="modal-title fs-5" id="exampleModalLabel">Modal title</h1>
+        <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
       </div>
-      <div className="modal-body">
-        {/* Scrollable Content Here */}
-        <input></input>
-        <p>Breakfast: Idli & Sambhar</p>
-        <p>Lunch: Rice, Dal, Aloo fry</p>
-        <p>Dinner: Roti, Paneer curry</p>
-        <p>Snacks: Samosa</p>
-        <p>And more... (you can add dynamic content here)</p>
+      <div class="modal-body">
+        <label>enter Hosteller id to vacate : </label>
+        <input className='form-control'></input>
       </div>
-      <div className="modal-footer">
-        <button
-          type="button"
-          className="btn btn-secondary"
-          data-bs-dismiss="modal"
-        >
-          Close
-        </button>
+      <div class="modal-footer">
+        <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Close</button>
+        <button type="button" class="btn btn-danger">vacate</button>
       </div>
     </div>
   </div>
 </div>
-
-         
-        
-    </>
+   </>
   );
 }
 
