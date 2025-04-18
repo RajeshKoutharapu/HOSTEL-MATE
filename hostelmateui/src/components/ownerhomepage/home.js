@@ -1,17 +1,28 @@
 import './home.css';
 import { Link,useLocation } from 'react-router-dom';
+import { useEffect } from 'react';
+import { useOwner } from '../../context/ownerContext';
 
 function OwnerHomePage() {
   const handleProfileClick = () => {
     alert("Profile icon clicked! You can navigate to the profile page here.");
   };
   const location = useLocation();
-  const username=location.state?.HostelName
+  const { ownerData, setOwnerData } = useOwner();
+
+  useEffect(() => {
+    const hostelName = location.state?.HostelName;
+    const email = location.state?.username;
+
+    if (hostelName && email) {
+      setOwnerData({ hostelName, email });
+    }
+  }, [location.state, setOwnerData]);
 
   return (
     <>
       <nav className="navbar custom-navbar " data-bs-theme="dark">
-        <h1 className="navbar-title ">Hello {username}</h1>
+        <h1 className="navbar-title ">Hello {ownerData.hostelName}</h1>
 
         <svg
           className="icon"
@@ -38,7 +49,7 @@ function OwnerHomePage() {
               <div className="card text-center h-100 shadow-sm">
                 <div className="card-body d-flex flex-column justify-content-between cards">
                   <h5 className="card-title">Add hostelr</h5>
-                  <Link to="/add" className="btn btn-primary mt-3">Add</Link>
+                  <Link to="/add"  className="btn btn-primary mt-3">Add</Link>
                   </div>
               </div>
             </div>

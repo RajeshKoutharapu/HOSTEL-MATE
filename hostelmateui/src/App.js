@@ -7,11 +7,12 @@ import OwnerHomePage from './components/ownerhomepage/home.js';
 import AddHosteller from './components/ownerfeatures/addHosteller/addhosteller.js';
 import PendingDues from './components/ownerfeatures/pendingdues/pendingdues.js';
 import GetHosteller from './components/ownerfeatures/hostellersInfo/gethostlers.js';
+import { OwnerProvider } from './context/ownerContext.js';
 function App() {
   return (
     <>
-   
-   <BrowserRouter>
+    <OwnerProvider>
+    <BrowserRouter>
    
    <Routes>
     <Route path='/' element={<Login />}/>
@@ -23,6 +24,9 @@ function App() {
    
    </Routes>
    </BrowserRouter>
+    </OwnerProvider>
+   
+   
   
     </>
    

@@ -17,6 +17,8 @@ import org.springframework.security.web.authentication.UsernamePasswordAuthentic
 
 import static org.springframework.security.config.Customizer.withDefaults;
 
+import java.util.List;
+
 @Configuration
 @EnableWebSecurity
 public class SecurityConfiguration {
@@ -29,9 +31,18 @@ public class SecurityConfiguration {
 
     @Bean
     public SecurityFilterChain securityFilterChain(HttpSecurity http) throws Exception {
-        http.csrf(csrf -> csrf.disable())
+        http
+            .csrf(csrf -> csrf.disable())
+            .cors(cors -> cors.configurationSource(request -> {
+                org.springframework.web.cors.CorsConfiguration config = new org.springframework.web.cors.CorsConfiguration();
+                config.setAllowedOrigins(List.of("http://localhost:3000"));
+                config.setAllowedMethods(List.of("GET", "POST", "PUT", "DELETE", "OPTIONS"));
+                config.setAllowedHeaders(List.of("*"));
+                config.setAllowCredentials(true);
+                return config;
+            }))
             .authorizeHttpRequests(request -> request
-                .requestMatchers("/register", "login").permitAll()
+                .requestMatchers("/register", "/login").permitAll()
                 .anyRequest().authenticated())
             .httpBasic(withDefaults())
             .sessionManagement(session -> session.sessionCreationPolicy(SessionCreationPolicy.STATELESS))
@@ -39,6 +50,7 @@ public class SecurityConfiguration {
 
         return http.build();
     }
+
 
     @Bean
     public AuthenticationManager authenticationManager(AuthenticationConfiguration config) throws Exception {

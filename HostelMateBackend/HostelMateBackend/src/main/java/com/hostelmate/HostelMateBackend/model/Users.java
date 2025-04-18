@@ -1,15 +1,22 @@
-package com.hostelmate.HostelMateBackend.Dao;
+package com.hostelmate.HostelMateBackend.model;
 
+import jakarta.persistence.CascadeType;
 import jakarta.persistence.Entity;
 import jakarta.persistence.GeneratedValue;
 import jakarta.persistence.GenerationType;
 import jakarta.persistence.Id;
+import jakarta.persistence.OneToMany;
 import jakarta.persistence.Table;
 
 import java.sql.Timestamp;
+import java.util.ArrayList;
+import java.util.List;
+
+
+import com.hostelmate.HostelMateBackend.model.Hostellers;
 
 @Entity
-@Table(name="users")
+@Table(name="owners")
 public class Users {
 
 	@Id
@@ -32,6 +39,9 @@ public class Users {
         GOOGLE,
         GITHUB
     }
+    @OneToMany(mappedBy = "user", cascade = CascadeType.ALL, orphanRemoval = true)
+    private List<Hostellers> hostellers;
+
 
     // Getters and Setters
     public Long getId() {
@@ -107,6 +117,14 @@ public class Users {
     public void setCreatedAt(Timestamp createdAt) {
         this.createdAt = createdAt;
     }
+
+	public List<Hostellers> getHostellers() {
+		return hostellers;
+	}
+
+	public void setHostellers(List<Hostellers> hostellers) {
+		this.hostellers = hostellers;
+	}
 
    
 }

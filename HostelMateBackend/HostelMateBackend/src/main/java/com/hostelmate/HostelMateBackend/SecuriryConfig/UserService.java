@@ -1,5 +1,7 @@
 package com.hostelmate.HostelMateBackend.SecuriryConfig;
 import com.hostelmate.HostelMateBackend.Dao.*;
+import com.hostelmate.HostelMateBackend.model.Users;
+
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 

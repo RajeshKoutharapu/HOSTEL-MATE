@@ -25,7 +25,7 @@ function Login() {
             
               localStorage.setItem('token',token)
 
-             navigate("/hostelmatehome",{ state: { HostelName } });
+             navigate("/hostelmatehome",{ state: { HostelName,username } });
              
 
             } catch(error){

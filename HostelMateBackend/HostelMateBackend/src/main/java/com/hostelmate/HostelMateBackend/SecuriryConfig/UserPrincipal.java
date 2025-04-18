@@ -1,5 +1,7 @@
 package com.hostelmate.HostelMateBackend.SecuriryConfig;
 import com.hostelmate.HostelMateBackend.Dao.*;
+import com.hostelmate.HostelMateBackend.model.Users;
+
 import java.util.Collection;
 import java.util.Collections;
 

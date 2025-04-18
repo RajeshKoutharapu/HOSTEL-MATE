@@ -18,9 +18,9 @@ import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RestController;
 
 import com.hostelmate.HostelMateBackend.Dao.UserRepo;
-import com.hostelmate.HostelMateBackend.Dao.Users;
 import com.hostelmate.HostelMateBackend.SecuriryConfig.JwtService;
 import com.hostelmate.HostelMateBackend.SecuriryConfig.UserService;
+import com.hostelmate.HostelMateBackend.model.Users;
 import com.hostelmate.HostelMateBackend.model.useridpass;
 
 
