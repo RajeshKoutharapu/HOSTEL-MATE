@@ -12,7 +12,9 @@ public class WebConfig implements WebMvcConfigurer {
         registry.addMapping("/**") // Allow all routes
             .allowedOrigins("http://localhost:3000") // Allow frontend to send requests
             .allowedMethods("GET", "POST", "PUT", "DELETE", "PATCH") // Allowed HTTP methods
-            .allowedHeaders("*"); // Allow all headers
+            .allowedHeaders("*")
+            .exposedHeaders("Authorization")
+            .allowCredentials(true);// Allow all headers
     }
 
 }

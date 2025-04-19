@@ -1,14 +1,56 @@
 import './home.css';
 import { Link,useLocation } from 'react-router-dom';
-import { useEffect } from 'react';
+import { useEffect,useState } from 'react';
 import { useOwner } from '../../context/ownerContext';
-
+import axiosInstance from '../loginpage/axiosInstance';
 function OwnerHomePage() {
+
   const handleProfileClick = () => {
     alert("Profile icon clicked! You can navigate to the profile page here.");
   };
   const location = useLocation();
   const { ownerData, setOwnerData } = useOwner();
+  const[vacateStatus,UpdateVacte]=useState(false);
+  const[vacateinvalid,updateinvalidid]=useState(false);
+  const[vacateId,UpdateVacteId]=useState("");
+  const[succesvacate,upsuccessvacate]=useState(false);
+let response;
+//function to vacte hoster REqiuest to backend
+async function vacateHosteller() {
+  const token = localStorage.getItem('token');
+  console.log('JWT Token:', token);  // Log token here
+  
+  if (!token) {
+    console.log('Token is missing');
+    return;
+  }
+
+  console.log(vacateId);  // Log the vacate ID
+  try {
+    const response = await axiosInstance.post(
+      'http://localhost:8080/vacatehosteller',
+      { id: parseInt(vacateId) },
+      {
+        headers: {
+          Authorization: `Bearer ${token}`,
+        },
+      }
+    );
+
+    if (response === 'deleted') {
+      upsuccessvacate(true);
+    } else if (response.data === 'Invalid ID') {
+      updateinvalidid(true);
+    } else {
+      UpdateVacte(true);
+    }
+  } catch (error) {
+    console.error('Error during vacate request:', error);
+    if (error.response) {
+      console.error('Response data:', error.response.data);
+    }
+  }
+}
 
   useEffect(() => {
     const hostelName = location.state?.HostelName;
@@ -139,12 +181,28 @@ function OwnerHomePage() {
       </div>
       <div class="modal-body">
         <label>enter Hosteller id to vacate : </label>
-        <input className='form-control'></input>
+        <input className='form-control' value={vacateId} onChange={(e)=>{
+            UpdateVacteId(e.target.value);
+        }}></input>
       </div>
       <div class="modal-footer">
         <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Close</button>
-        <button type="button" class="btn btn-danger">vacate</button>
+        <button type="button" class="btn btn-danger" onClick={vacateHosteller}>vacate</button>
       </div>
+      {  vacateStatus && <>
+                    <p className='text text-danger'>Pending Due {response.data}</p> 
+        </>
+      }
+      {
+        vacateinvalid && <>
+        <p className='text text-danger'>---INVALI ID---</p>
+        </>
+      }
+       {
+        succesvacate && <>
+        <p className='text text-primary'>Hosteller Vacated</p>
+        </>
+      }
     </div>
   </div>
 </div>

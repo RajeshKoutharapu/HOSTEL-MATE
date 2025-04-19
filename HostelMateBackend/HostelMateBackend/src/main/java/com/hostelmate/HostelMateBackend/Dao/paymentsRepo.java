@@ -19,5 +19,11 @@ public interface paymentsRepo extends CrudRepository<HostellerPayment, Integer> 
 		       "WHERE p.paymentStatus = :status")
 		List<Object[]> getPendingDuesData(@Param("status") HostellerPayment.PaymentStatus status);
 
+		@Query("SELECT h, p " +
+			       "FROM Hostellers h " +
+			       "JOIN HostellerPayment p ON h.id = p.hostellerId " +
+			       "WHERE h.ownermail = :ownerId AND h.id = :hostellerId")
+			Object getHostellerInformation(@Param("ownerId") String ownerId,
+			                                           @Param("hostellerId") Integer hostellerId);
 
 }

@@ -3,6 +3,8 @@ package com.hostelmate.HostelMateBackend.model;
 import jakarta.persistence.*;
 import java.util.Date;
 
+import com.fasterxml.jackson.annotation.JsonIgnore;
+
 
 @Entity
 @Table(name = "hostellers")
@@ -24,6 +26,7 @@ public class Hostellers {
     private String mode;
     private Double advancePayment;
     private String hostelleruserid;
+    private String stayingStatus;
     
     //owermailid not in hosteller table we getting this from ui to join the table with the right iwner
      private String ownermail;
@@ -34,7 +37,11 @@ public class Hostellers {
 
     @ManyToOne(fetch = FetchType.LAZY)
     @JoinColumn(name = "owner_id") // FK column referencing Users.id
+    @JsonIgnore
     private Users user;
+
+    @OneToOne(mappedBy = "hosteller", cascade = CascadeType.ALL, orphanRemoval = true)
+    private HostellerPayment hostellerPayment;
 
     // Getters and Setters
     public Integer getId() { return id; }
@@ -126,6 +133,13 @@ public class Hostellers {
 	public void setOwnermail(String ownermail) {
 		this.ownermail = ownermail;
 	}
+	public String getStayingStatus() {
+		return stayingStatus;
+	}
+	public void setStayingStatus(String stayingStatus) {
+		this.stayingStatus = stayingStatus;
+	}
+	
 	
 
     // other getters and setters...

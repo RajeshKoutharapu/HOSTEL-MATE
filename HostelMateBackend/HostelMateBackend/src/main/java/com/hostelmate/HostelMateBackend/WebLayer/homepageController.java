@@ -1,11 +1,13 @@
 package com.hostelmate.HostelMateBackend.WebLayer;
 
+import java.math.BigDecimal;
 import java.util.List;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.GetMapping;
+import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RestController;
@@ -23,6 +25,10 @@ public class homepageController {
      addHosteller add;
     @Autowired
 	 pendingDues pendingdues; 
+    @Autowired
+    vacateHostellers vacateHostellers;
+    @Autowired
+    GetHostellers getHostellers;
      
 	@PostMapping("/addhosteller")
 	public ResponseEntity<?> addHosteller(@RequestBody Hostellers hosteller){
@@ -39,4 +45,24 @@ public class homepageController {
 		
 		return  pendingdues.getPendingDues();
 	}
+	
+	@PostMapping("/vacatehosteller")
+	public ResponseEntity<?> vacateHosteller(@RequestBody Integer id){
+		   System.out.println("in VACATED");
+		String pendingamount=vacateHostellers.vacateHostellerId(id);
+		 return ResponseEntity.ok(pendingamount);
+	}
+	
+	@GetMapping("/owners/{ownerId}/hostellers/{hostellerId}/dues")
+	public Object getAllHostellers(@PathVariable String ownerId,
+	                                       @PathVariable Integer hostellerId) {
+	    if (getHostellers.validateHosteller(hostellerId)) {
+	    	System.out.println("IN IF");
+	        return getHostellers.getHosteller(ownerId, hostellerId);
+	    } else {
+	    	System.out.println("IN FALSE");
+	        return null;
+	    }
+	}
+
 }
