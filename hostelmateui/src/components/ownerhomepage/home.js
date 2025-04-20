@@ -100,7 +100,7 @@ async function vacateHosteller() {
            <div className="card text-center h-100 shadow-sm">
              <div className="card-body d-flex flex-column justify-content-between cards">
                <h5 className="card-title">Pending Dues</h5>
-               <Link to="/pendingdues" className="btn btn-primary mt-3">Add</Link>
+               <Link to="/pendingdues" className="btn btn-primary mt-3">Get Dues</Link>
                </div>
            </div>
          </div>
@@ -136,7 +136,7 @@ async function vacateHosteller() {
            <div className="card text-center h-100 shadow-sm">
              <div className="card-body d-flex flex-column justify-content-between cards">
                <h5 className="card-title">Get Hostler Information</h5>
-               <Link to="/gethostller" className="btn btn-primary mt-3">Add</Link>
+               <Link to="/gethostller" className="btn btn-primary mt-3">GET</Link>
              </div>
            </div>
          </div>

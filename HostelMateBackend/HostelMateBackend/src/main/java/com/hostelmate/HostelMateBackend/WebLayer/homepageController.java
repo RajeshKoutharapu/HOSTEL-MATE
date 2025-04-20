@@ -53,7 +53,7 @@ public class homepageController {
 		 return ResponseEntity.ok(pendingamount);
 	}
 	
-	@GetMapping("/owners/{ownerId}/hostellers/{hostellerId}/dues")
+	@GetMapping("/owners/{ownerId}/hostellers/{hostellerId}")
 	public Object getAllHostellers(@PathVariable String ownerId,
 	                                       @PathVariable Integer hostellerId) {
 	    if (getHostellers.validateHosteller(hostellerId)) {
